@@ -83,6 +83,7 @@ def extractData(date, position, ticker):
     try:
         priceData = data[0]
         high = (float(priceData["High"]) - close) / float(close) 
+        highest = high * 100
         pop = (float(priceData["Open"]) - close) / float(close) 
         pop = pop * 100
         rise = (float(priceData["Close"]) - close) / float(close) 
@@ -96,7 +97,7 @@ def extractData(date, position, ticker):
     nextDayOpen = float(priceData["Open"])
     nextDayClose = float(priceData["Close"])
 
-    internal_ob["high"] = high
+    internal_ob["highest"] = highest
     internal_ob["move_next_open"] = pop
     internal_ob["move_next_close"] = rise
     internal_ob["open"] = opening
