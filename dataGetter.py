@@ -30,6 +30,7 @@ def makeOb(ob):
     internal_ob["open"] = 0
     internal_ob["close"] = 0
     internal_ob["lowest"] = 0
+    internal_ob["highest"] = 0
 
     status = 0
     errors = 0
