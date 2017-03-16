@@ -106,6 +106,7 @@ def extractData(date, position, ticker):
     internal_ob["lowest"] = low
     internal_ob["nextDay_open"] = nextDayOpen
     internal_ob["nextDay_close"] = nextDayClose
+    internal_ob["nextDay_move"] = ((nextDayClose - nextDayOpen) / float(nextDayOpen)) * 100
 
     return internal_ob
 
