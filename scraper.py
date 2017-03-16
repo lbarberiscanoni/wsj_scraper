@@ -6,6 +6,7 @@ import time
 import sys
 import json
 from os.path import expanduser
+
 home = expanduser("~")
 
 
@@ -102,11 +103,11 @@ class Scraper():
     def main(self):
         today = str(datetime.now()).split(" ")[0]
         print today
-        try:
-            obList = []
-            end = datetime(2007, 5, 1)
-            totalDaysToDo = int((datetime.now() - end).days)
-            for i in range(0, totalDaysToDo):
+        obList = []
+        end = datetime(2007, 5, 1)
+        totalDaysToDo = int((datetime.now() - end).days)
+        for i in range(0, totalDaysToDo):
+            try:
                 print str(i)
                 beginning = datetime.strptime(today, "%Y-%m-%d")
                 date = beginning - timedelta(days=i)
@@ -117,11 +118,23 @@ class Scraper():
                     obList += result
                 else:
                     print "skipping " + str(date)
-            jsonResult = json.dumps(obList)
-            f = open(home + "/Dropbox/wsj_algo/data/" + self.market + "_" + self.direction + ".txt", "w")
-            f.write(jsonResult)
-            f.close()
-        except Exception as e:
-            print e
+            except Exception as e:
+                 print str(e)
+                 if "timeout" in str(e):
+                    self.browser.refresh()
+                    beginning = datetime.strptime(today, "%Y-%m-%d")
+                    date = beginning - timedelta(days=i)
+                    if date.isoweekday() in range(1, 6):
+                        date_formatted = date.strftime("%Y-%m-%d").split(" ")[0]
+                        print "doing " + str(date_formatted)
+                        result = self.top100(date_formatted)
+                        obList += result
+                    else:
+                        print "skipping " + str(date)
+
+        jsonResult = json.dumps(obList)
+        f = open(home + "/Dropbox/wsj_algo/data/" + self.market + "_" + self.direction + ".txt", "w")
+        f.write(jsonResult)
+        f.close()
 
 Scraper(market, direction).main()
