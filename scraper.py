@@ -36,7 +36,7 @@ class Scraper():
                 base_url = "http://online.wsj.com/mdc/public/page/2_3021-losecomp-loser-" + date.replace("-", "") + ".html?mod=mdc_pastcalendar"
         return base_url
 
-    def scrapeData(url):
+    def scrapeData(self, url):
         dfs = pd.read_html(url, header=0)
         spec = dfs[1]
         spec["Ticker"] = spec["Issue(Roll over for charts and headlines)"].str.split("(").str[1].str.replace(")", "")
