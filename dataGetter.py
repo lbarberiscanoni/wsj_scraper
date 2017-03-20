@@ -31,6 +31,10 @@ def makeOb(ob):
     internal_ob["close"] = 0
     internal_ob["lowest"] = 0
     internal_ob["highest"] = 0
+    internal_ob["nextDay_open"] = 0
+    internal_ob["nextDay_close"] = 0
+    internal_ob["nextDay_move"] = 0
+
 
     status = 0
     errors = 0

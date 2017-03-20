@@ -75,4 +75,3 @@ class Scraper():
 
         self.makeFile(obList)
 
-Scraper(market, direction).run()
