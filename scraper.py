@@ -1,6 +1,7 @@
 import pandas as pd
 from datetime import datetime, timedelta
 import sys
+import json
 from os.path import expanduser
 home = expanduser("~")
 
@@ -62,17 +63,21 @@ class Scraper():
         end = datetime(2007, 5, 1)
         totalDaysToDo = int((datetime.now() - end).days)
         for i in range(0, totalDaysToDo):
-            print str(i)
+            print str(i) + "/" + str(totalDaysToDo)
             beginning = datetime.strptime(today, "%Y-%m-%d")
-            date = beginning - timedelta(days=i)
+            date = beginning - timedelta(days=2 + i)
             if date.isoweekday() in range(1, 6):
-                date_formatted = date.strftime("%Y-%m-%d").split(" ")[0]
-                print "doing " + str(date_formatted)
-                result = self.scrapeData(self.getUrl(date_formatted))
-                obList.append(result)
+                try:
+                    date_formatted = date.strftime("%Y-%m-%d").split(" ")[0]
+                    print "doing " + str(date_formatted)
+                    result = self.scrapeData(self.getUrl(date_formatted))
+                    obList.append(result)
+                except Exception as e:
+                    print e
             else:
                 print "skipping " + str(date)
 
         self.makeFile(obList)
+        print "file made"
 
 Scraper(market, direction).run()
