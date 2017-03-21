@@ -57,6 +57,9 @@ class DataGetter():
         f.close()
     
     def run(self):
-        self.processData()
+        results = self.processData()
+        print "data gotten"
+        self.makeFile(results)
+        print "file made"
 
 DataGetter(market, direction).run()
