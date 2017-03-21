@@ -26,14 +26,29 @@ class DataGetter():
 
         self.data = raw_data
 
+    def makeOb(self, el):
+        try:
+            startDate = el["date"]
+            beginning = datetime.strptime(startDate, "%Y-%m-%d")
+            weekLater = beginning + timedelta(days=7)
+            date_formatted = weekLater.strftime("%Y-%m-%d").split(" ")[0]
+            el["raw_data"] = Share(el["ticker"]).get_historical(startDate, date_formatted)
+        except Exception as e:
+            print e
+            el["raw_data"] = []
+
+        return el
+
     def processData(self):
         tranformedData = []
         i = 0
         for el in self.data:
             print "doing #" + str(i + 1) + "/" + str(len(self.data))
-            result = makeOb(el)
+            result = self.makeOb(el)
             tranformedData.append(result)
             i += 1
+
+        return tranformedData
 
     def makeFile(self, tranformedData):
         jsonResult = json.dumps(tranformedData)
@@ -42,7 +57,6 @@ class DataGetter():
         f.close()
     
     def run(self):
-        for el in self.data:
-            print el
+        self.processData()
 
 DataGetter(market, direction).run()
