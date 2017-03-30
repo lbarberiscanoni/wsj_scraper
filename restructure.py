@@ -11,7 +11,7 @@ market = sys.argv[1]
 side = sys.argv[2]
 
 def getData():
-    f = open(home + "/Dropbox/wsj_algo/data/" + market + "-" + side + "-test.txt", "r")
+    f = open(home + "/Dropbox/wsj_algo/data/" + market + "-" + side + ".txt", "r")
     txt = f.read()
     raw_data = json.loads(txt.replace("'", "\""))
     f.close()
@@ -31,6 +31,8 @@ def generate():
         except:
             move = 0
         el["nextDay_move"] = move
+        el["highest"] = el["high"]
+        el["lowest"] = el["lowest"]
         data.append(el)
 
     return data
@@ -82,5 +84,6 @@ def test():
         returnList.append(move)
 
     print confidenceInterval(returnList)
-#makeFile(generate())
-test()
+
+makeFile(generate())
+#test()
