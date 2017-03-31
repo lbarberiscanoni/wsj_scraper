@@ -74,7 +74,7 @@ class Structurer():
 
     def makeFile(self, tranformedData):
         jsonResult = json.dumps(tranformedData)
-        f = open(home + "/Dropbox/wsj_algo/data/" + self.market + "-" + self.direction + "_structured.txt", "w")
+        f = open(home + "/Dropbox/wsj_algo/data/" + self.market + "-" + self.side + "_structured.txt", "w")
         f.write(jsonResult)
         f.close()
 
