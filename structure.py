@@ -61,7 +61,9 @@ class Structurer():
 
     def run(self):
         structuredData = []
+        i = 0
         for el in self.raw_data:
+            print i, len(self.raw_data)
             priceData = el["raw_data"]
             if len(priceData) > 0:
                 try:
@@ -69,6 +71,7 @@ class Structurer():
                     structuredData.append(ob)
                 except Exception as e:
                     print str(e)
+            i += 1
 
         self.makeFile(structuredData)
 
